@@ -2,6 +2,7 @@ import { Box, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MessageInput from "./MessageInput";
 import Message from "./Message";
+import "../styles/ChatWindow.css";
 
 const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
