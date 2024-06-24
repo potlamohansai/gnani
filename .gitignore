@@ -2,6 +2,7 @@
 
 # dependencies
 /websocket-server/node_modules
+/websocket-server/.env
 /node_modules
 /.pnp
 .pnp.js
