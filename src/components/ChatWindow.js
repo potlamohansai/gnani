@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MessageInput from "./MessageInput";
 import Message from "./Message";
 import "../styles/ChatWindow.css";
@@ -7,6 +7,7 @@ import "../styles/ChatWindow.css";
 const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
   const [ws, setWs] = useState(null);
+  const messagesEndRef = useRef(null);
 
   // WEBSOCKET CONNECTION
   useEffect(() => {
@@ -20,6 +21,11 @@ const ChatWindow = () => {
     return () => socket.close();
   }, []);
 
+  // Scroll to the bottom of the messages container
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   //SEND MESSAGE FUNCTION
   const sendMessage = (message) => {
     if (ws) {
@@ -32,14 +38,18 @@ const ChatWindow = () => {
   };
 
   return (
-    <Paper elevation={3} className="chat-window">
-      <Box className="messages">
-        {messages.map((msg, index) => (
-          <Message key={index} text={msg.text} sender={msg.sender} />
-        ))}
-      </Box>
-      <MessageInput onSend={sendMessage} />
-    </Paper>
+    <>
+      <h1>GNANI CHATBOT</h1>
+      <Paper elevation={3} className="chat-window">
+        <Box className="messages">
+          {messages.map((msg, index) => (
+            <Message key={index} text={msg.text} sender={msg.sender} />
+          ))}
+          <div ref={messagesEndRef} />
+        </Box>
+        <MessageInput onSend={sendMessage} />
+      </Paper>
+    </>
   );
 };
 

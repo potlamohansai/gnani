@@ -11,13 +11,22 @@ const MessageInput = ({ onSend }) => {
       setInput("");
     }
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSend();
+    }
+  };
+
   return (
     <Box className="message-input">
       <TextField
+        className="input"
         fullWidth
         variant="outlined"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Type a message..."
       />
       <Button variant="contained" color="primary" onClick={handleSend}>

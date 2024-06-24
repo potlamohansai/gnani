@@ -15,7 +15,7 @@ server.on("connection", (ws) => {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-3.5-turbo", //if you have access to it
+          model: "gpt-3.5-turbo",
           messages: [{ role: "user", content: userMessage }],
           max_tokens: 150,
           temperature: 0.7,
@@ -27,44 +27,6 @@ server.on("connection", (ws) => {
           },
         }
       );
-
-      //       if (
-      //         response.data &&
-      //         response.data.choices &&
-      //         response.data.choices.length > 0
-      //       ) {
-      //         const aiMessage = response.data.choices[0].message?.content?.trim();
-      //         if (aiMessage) {
-      //           ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
-      //         } else {
-      //           ws.send(
-      //             JSON.stringify({
-      //               text: "Error: Invalid response structure from AI",
-      //               sender: "bot",
-      //             })
-      //           );
-      //         }
-      //       } else {
-      //         ws.send(
-      //           JSON.stringify({
-      //             text: "Error: No choices in response from AI",
-      //             sender: "bot",
-      //           })
-      //         );
-      //       }
-      //     } catch (error) {
-      //       console.error(
-      //         "Error fetching response from API",
-      //         error.response ? error.response.data : error.message
-      //       );
-      //       ws.send(
-      //         JSON.stringify({
-      //           text: "Error: Could not retrieve response from AI",
-      //           sender: "bot",
-      //         })
-      //       );
-      //     }
-      //   });
 
       const aiMessage = response.data.choices[0].message.content.trim();
       ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
