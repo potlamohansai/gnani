@@ -26,4 +26,4 @@ The chatbot uses the ChatGPT 3.5 turbo API to generate responses to user queries
 - The application is well-structured with components and clear separation of concerns using compponents ChatWindow, Messages and MessageInput.
 - Added avatars to differentiate user and chatgpt messages.
 - Handled "Enter" key press to Submit the query.
--
+- Implemented Timestamp feature for messages.

@@ -15,7 +15,11 @@ const ChatWindow = () => {
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log(message);
-      setMessages((prevMessages) => [...prevMessages, message]);
+      const timestamp = Date.now();
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: message.text, sender: "gpt", timestamp },
+      ]);
     };
     setWs(socket);
     return () => socket.close();
@@ -29,10 +33,11 @@ const ChatWindow = () => {
   //SEND MESSAGE FUNCTION
   const sendMessage = (message) => {
     if (ws) {
-      ws.send(JSON.stringify({ text: message, sender: "user" }));
+      const timestamp = Date.now();
+      ws.send(JSON.stringify({ text: message, sender: "user", timestamp }));
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: message, sender: "user" },
+        { text: message, sender: "user", timestamp },
       ]);
     }
   };
@@ -40,10 +45,15 @@ const ChatWindow = () => {
   return (
     <>
       <h1>GNANI CHATBOT</h1>
-      <Paper elevation={3} className="chat-window">
+      <Paper elevation={8} square={false} className="chat-window">
         <Box className="messages">
           {messages.map((msg, index) => (
-            <Message key={index} text={msg.text} sender={msg.sender} />
+            <Message
+              key={index}
+              text={msg.text}
+              sender={msg.sender}
+              timestamp={msg.timestamp}
+            />
           ))}
           <div ref={messagesEndRef} />
         </Box>
