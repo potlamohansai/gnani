@@ -4,6 +4,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import "../styles/Message.css";
 
+//MESSAGES COMPONENT
+
 const Message = ({ text, sender, timestamp }) => {
   const formattedTime = new Date(timestamp).toLocaleTimeString();
 

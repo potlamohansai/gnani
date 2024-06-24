@@ -20,6 +20,7 @@ const MessageInput = ({ onSend }) => {
 
   return (
     <Box className="message-input">
+      {/* TEXTFIELD */}
       <TextField
         className="input"
         fullWidth
@@ -29,6 +30,8 @@ const MessageInput = ({ onSend }) => {
         onKeyDown={handleKeyDown}
         placeholder="Type a message..."
       />
+
+      {/* SEND BUTTON */}
       <Button variant="contained" color="primary" onClick={handleSend}>
         Send
       </Button>

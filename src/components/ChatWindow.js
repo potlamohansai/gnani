@@ -30,7 +30,7 @@ const ChatWindow = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  //SEND MESSAGE FUNCTION
+  //SEND MESSAGE INPUT to WebSocket Server
   const sendMessage = (message) => {
     if (ws) {
       const timestamp = Date.now();
@@ -57,6 +57,7 @@ const ChatWindow = () => {
           ))}
           <div ref={messagesEndRef} />
         </Box>
+        {/* Message Input Component */}
         <MessageInput onSend={sendMessage} />
       </Paper>
     </>
