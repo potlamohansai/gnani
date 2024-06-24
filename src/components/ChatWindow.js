@@ -23,7 +23,7 @@ const ChatWindow = () => {
   //SEND MESSAGE FUNCTION
   const sendMessage = (message) => {
     if (ws) {
-      ws.send(JSON.stringify([{ text: message, sender: "user" }]));
+      ws.send(JSON.stringify({ text: message, sender: "user" }));
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: message, sender: "user" },

@@ -22,37 +22,52 @@ server.on("connection", (ws) => {
         },
         {
           headers: {
-            Authorization:
-              "Bearer sk-proj-lJqONKZhNeQvmg4bmLZWT3BlbkFJRFfoyHUJ0VOs9qGi3gqP", //`Bearer ${process.env.OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (
-        response.data &&
-        response.data.choices &&
-        response.data.choices.length > 0
-      ) {
-        const aiMessage = response.data.choices[0].message?.content?.trim();
-        if (aiMessage) {
-          ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
-        } else {
-          ws.send(
-            JSON.stringify({
-              text: "Error: Invalid response structure from AI",
-              sender: "bot",
-            })
-          );
-        }
-      } else {
-        ws.send(
-          JSON.stringify({
-            text: "Error: No choices in response from AI",
-            sender: "bot",
-          })
-        );
-      }
+      //       if (
+      //         response.data &&
+      //         response.data.choices &&
+      //         response.data.choices.length > 0
+      //       ) {
+      //         const aiMessage = response.data.choices[0].message?.content?.trim();
+      //         if (aiMessage) {
+      //           ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
+      //         } else {
+      //           ws.send(
+      //             JSON.stringify({
+      //               text: "Error: Invalid response structure from AI",
+      //               sender: "bot",
+      //             })
+      //           );
+      //         }
+      //       } else {
+      //         ws.send(
+      //           JSON.stringify({
+      //             text: "Error: No choices in response from AI",
+      //             sender: "bot",
+      //           })
+      //         );
+      //       }
+      //     } catch (error) {
+      //       console.error(
+      //         "Error fetching response from API",
+      //         error.response ? error.response.data : error.message
+      //       );
+      //       ws.send(
+      //         JSON.stringify({
+      //           text: "Error: Could not retrieve response from AI",
+      //           sender: "bot",
+      //         })
+      //       );
+      //     }
+      //   });
+
+      const aiMessage = response.data.choices[0].message.content.trim();
+      ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
     } catch (error) {
       console.error(
         "Error fetching response from API",
@@ -66,22 +81,6 @@ server.on("connection", (ws) => {
       );
     }
   });
-
-  //       const aiMessage = response.data.choices[0].message.content.trim();
-  //       ws.send(JSON.stringify({ text: aiMessage, sender: "bot" }));
-  //     } catch (error) {
-  //       console.error(
-  //         "Error fetching response from API",
-  //         error.response ? error.response.data : error.message
-  //       );
-  //       ws.send(
-  //         JSON.stringify({
-  //           text: "Error: Could not retrieve response from AI",
-  //           sender: "bot",
-  //         })
-  //       );
-  //     }
-  //   });
 
   ws.on("close", () => {
     console.log("Client disconnected");
