@@ -13,6 +13,7 @@ const ChatWindow = () => {
     const socket = new WebSocket("ws://localhost:8080");
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
+      console.log(message);
       setMessages((prevMessages) => [...prevMessages, message]);
     };
     setWs(socket);
@@ -22,7 +23,7 @@ const ChatWindow = () => {
   //SEND MESSAGE FUNCTION
   const sendMessage = (message) => {
     if (ws) {
-      ws.send(JSON.stringify({ text: message, sender: "user" }));
+      ws.send(JSON.stringify([{ text: message, sender: "user" }]));
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: message, sender: "user" },
